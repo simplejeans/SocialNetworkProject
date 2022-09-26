@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from posts.models import Post
+from posts.models import Post, UserPostRelation
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -17,3 +17,12 @@ class PostSerializer(serializers.ModelSerializer):
         author = self.context["request"].user
         validated_data["author"] = author
         return super().create(validated_data)
+
+
+class UserPostRelationSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = UserPostRelation
+        fields = ('post', 'like', 'unlike')
+
+
+
