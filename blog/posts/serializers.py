@@ -25,14 +25,4 @@ class LikesSerializers(serializers.ModelSerializer):
         model = Like
         fields = ('post', 'like')
 
-    @staticmethod
-    def make_unlike(self):
-        post = Post.objects.get(likes_id=request.user.id)
-        if post.exists():
-            post.remove(request.user)
-
-
-
-
-
 
