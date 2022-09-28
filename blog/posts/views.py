@@ -1,10 +1,12 @@
-from rest_framework.mixins import UpdateModelMixin
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from django.contrib.auth import get_user_model
+from rest_framework.viewsets import ModelViewSet
 
-from posts.models import Post, UserPostRelation
+from posts.models import Post, Like
 from posts.permissions import IsAuthenticatedOrReadOnly
-from posts.serializers import PostSerializer, UserPostRelationSerializers
+from posts.serializers import PostSerializer, LikesSerializers
+
+
+user = get_user_model()
 
 
 class PostViewSet(ModelViewSet):
@@ -13,11 +15,13 @@ class PostViewSet(ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
 
-class UserPostRelationView(UpdateModelMixin, GenericViewSet):
-    permission_classes = [IsAuthenticated]
-    queryset = UserPostRelation.objects.all()
-    serializer_class = UserPostRelationSerializers
+class LikeAPIView(ModelViewSet):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    queryset = Like.objects.all()
+    serializer_class = LikesSerializers
     lookup_field = 'post'
+
+
 
 
 

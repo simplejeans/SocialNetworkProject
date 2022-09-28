@@ -1,6 +1,7 @@
-from rest_framework import serializers
 
-from posts.models import Post, UserPostRelation
+from rest_framework import serializers, request
+
+from posts.models import Post, Like
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -19,10 +20,19 @@ class PostSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
 
-class UserPostRelationSerializers(serializers.ModelSerializer):
+class LikesSerializers(serializers.ModelSerializer):
     class Meta:
-        model = UserPostRelation
-        fields = ('post', 'like', 'unlike')
+        model = Like
+        fields = ('post', 'like')
+
+    @staticmethod
+    def make_unlike(self):
+        post = Post.objects.get(likes_id=request.user.id)
+        if post.exists():
+            post.remove(request.user)
+
+
+
 
 
 
