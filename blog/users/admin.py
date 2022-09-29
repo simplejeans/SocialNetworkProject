@@ -9,6 +9,3 @@ class PostAdmin(ModelAdmin):
     pass
 
 
-@admin.register(Like)
-class LikeAdmin(ModelAdmin):
-    pass

@@ -1,13 +1,12 @@
 
-from posts.views import PostViewSet, LikeAPIView
+from posts.views import PostViewSet
 
 from rest_framework.routers import SimpleRouter
 
 router = SimpleRouter()
 
-router.register(r'like', LikeAPIView)
-router.register(r'', PostViewSet)
 
+router.register(r'', PostViewSet)
 
 urlpatterns = []
 

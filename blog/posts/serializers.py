@@ -23,6 +23,6 @@ class PostSerializer(serializers.ModelSerializer):
 class LikesSerializers(serializers.ModelSerializer):
     class Meta:
         model = Like
-        fields = ('post', 'like')
+        fields = '__all__'
 
 

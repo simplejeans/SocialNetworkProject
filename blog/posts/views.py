@@ -1,11 +1,16 @@
+
 from django.contrib.auth import get_user_model
-from rest_framework import request
+from django.http import HttpResponseRedirect
+from rest_framework import status
+from rest_framework.decorators import action
+from rest_framework.generics import get_object_or_404
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
 from rest_framework.viewsets import ModelViewSet
 
 from posts.models import Post, Like
 from posts.permissions import IsAuthenticatedOrReadOnly
 from posts.serializers import PostSerializer, LikesSerializers
-
 
 user = get_user_model()
 
@@ -15,19 +20,20 @@ class PostViewSet(ModelViewSet):
     serializer_class = PostSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
-    @staticmethod
-    def make_unlike(self):
-        post = Post.objects.get(likes_id=request.user.id)
-        if post.exists():
-            post.remove(request.user)
+    @action(detail=True, methods=['post'])
+    def like(self, request, pk):
+        user = request.user
+        post = get_object_or_404(Post, id=pk)
+        post.likes.add(user)
+        return HttpResponseRedirect(reverse('post-detail', args=[str(pk)]))
 
-class LikeAPIView(ModelViewSet):
-    permission_classes = [IsAuthenticatedOrReadOnly]
-    queryset = Like.objects.all()
-    serializer_class = LikesSerializers
-    lookup_field = 'post'
-
-
+    @action(detail=True)
+    def unlike(self, request, pk):
+        user = request.user
+        post = get_object_or_404(Post, id=pk)
+        if post.likes.filter(id=user.id).exists():
+            post.likes.remove(user.id)
+        return HttpResponseRedirect(reverse('post-detail', args=[str(pk)]))
 
 
 
