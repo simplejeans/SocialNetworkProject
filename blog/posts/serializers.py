@@ -1,6 +1,7 @@
-from rest_framework import serializers
 
-from posts.models import Post
+from rest_framework import serializers, request
+
+from posts.models import Post, Like
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -17,3 +18,6 @@ class PostSerializer(serializers.ModelSerializer):
         author = self.context["request"].user
         validated_data["author"] = author
         return super().create(validated_data)
+
+
+
