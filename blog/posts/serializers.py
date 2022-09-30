@@ -20,9 +20,4 @@ class PostSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
 
-class LikesSerializers(serializers.ModelSerializer):
-    class Meta:
-        model = Like
-        fields = '__all__'
-
 
