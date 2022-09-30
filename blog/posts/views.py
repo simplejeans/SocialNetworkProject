@@ -19,12 +19,12 @@ class PostViewSet(ModelViewSet):
 
     @action(detail=True, methods=['post'])
     def like(self, request, pk):
-        like_post(request=request, pk=pk)
+        like_post(post_id=pk, user=request.user)
         return Response()
 
     @action(detail=True)
     def unlike(self, request, pk):
-        unlike_post(request=request, pk=pk)
+        unlike_post(post_id=pk, user=request.user)
         return Response()
 
 
