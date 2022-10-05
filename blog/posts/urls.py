@@ -12,7 +12,7 @@ router.register(r'', PostViewSet)
 
 urlpatterns = [
 
-    path('analytics/', LikesAnalyticsAPIView.as_view())
+    path('likes/analytics/', LikesAnalyticsAPIView.as_view())
 
 ]
 
