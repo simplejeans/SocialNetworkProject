@@ -44,16 +44,3 @@ class LikesAnalyticsAPIView(generics.ListAPIView):
     def get_queryset(self):
         return Like.objects.all().annotate(date=TruncDay('created_at'))\
             .values('date').annotate(likes=Count('post')).order_by("-date")
-
-
-
-"""
-    def get_queryset(self):
-        queryset = self.queryset
-        date_from = self.request.query_params.get('date_from')
-        date_to = self.request.query_params.get('date_to')
-        if date_from and date_to is not None:
-            queryset = self.queryset.filter(created_at__range=(date_from, date_to))
-        return queryset
-"""
-
