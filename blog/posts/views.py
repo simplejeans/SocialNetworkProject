@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from posts.models import Post, Like
 from posts.permissions import IsAuthenticatedOrReadOnly
-from posts.serializers import PostSerializer, LikeSerializer
+from posts.serializers import PostSerializer, LikesAnalyticsSerializer
 from posts.services import like_post, unlike_post
 
 user = get_user_model()
@@ -32,7 +32,7 @@ class PostViewSet(ModelViewSet):
 
 
 class LikesAnalyticsAPIView(generics.ListAPIView):
-    serializer_class = LikeSerializer
+    serializer_class = LikesAnalyticsSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Like.objects.all()
     filter_backends = [DjangoFilterBackend, ]
