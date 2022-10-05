@@ -31,7 +31,7 @@ class PostViewSet(ModelViewSet):
         return Response()
 
 
-class PostAnalyticsViewSet(generics.ListAPIView):
+class LikesAnalyticsAPIView(generics.ListAPIView):
     serializer_class = LikeSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Like.objects.all()

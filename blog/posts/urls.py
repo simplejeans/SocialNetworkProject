@@ -1,18 +1,18 @@
 from django.urls import path
 
-from posts.views import PostViewSet, PostAnalyticsViewSet
+from posts.views import PostViewSet, LikesAnalyticsAPIView
 
 from rest_framework.routers import SimpleRouter
 
 router = SimpleRouter()
 
 
-router.register(r'', PostViewSet)
+router.register(r'posts/', PostViewSet)
 
 
 urlpatterns = [
 
-    path('analytics/', PostAnalyticsViewSet.as_view())
+    path('analytics/', LikesAnalyticsAPIView.as_view())
 
 ]
 
