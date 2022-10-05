@@ -20,4 +20,11 @@ class PostSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
 
+class LikeSerializer(serializers.ModelSerializer):
+    date = serializers.DateTimeField(format="%Y-%m-%d")
+    likes = serializers.IntegerField()
+
+    class Meta:
+        model = Like
+        fields = ('date', 'likes')
 
