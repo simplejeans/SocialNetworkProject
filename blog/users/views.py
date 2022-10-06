@@ -1,7 +1,7 @@
 from rest_framework import generics, mixins
 from rest_framework.generics import CreateAPIView
 from django.contrib.auth.models import User
-from users.serializers import UserSignUpSerializer, UserDetailSerializer
+from users.serializers import UserSignUpSerializer, UserActivitySerializer
 
 
 class SignUpView(CreateAPIView):
@@ -11,9 +11,7 @@ class SignUpView(CreateAPIView):
 class UserDetail(mixins.RetrieveModelMixin,
                  generics.GenericAPIView):
 
-    queryset = User.objects.all().select_related('extendeduser')
-    serializer_class = UserDetailSerializer
+    queryset = User.objects.all()
+    serializer_class = UserActivitySerializer
     permission_classes = []
-
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
+    lookup_field = "user_id"
