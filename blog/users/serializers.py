@@ -31,3 +31,14 @@ class UserSignUpSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'password': {'write_only': True}
         }
+
+
+class UserDetailSerializer(serializers.ModelSerializer):
+    last_request = serializers.DateTimeField(source='extendeduser.last_request')
+
+    class Meta:
+        model = User
+        fields = ('username',
+                  'last_login',
+                  'last_request'
+                  )
