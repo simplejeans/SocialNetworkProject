@@ -1,6 +1,8 @@
 from rest_framework import serializers, validators
 from django.contrib.auth import get_user_model
 
+from users.models import UserActivity
+
 User = get_user_model()
 
 
@@ -31,3 +33,14 @@ class UserSignUpSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'password': {'write_only': True}
         }
+
+
+class UserActivitySerializer(serializers.ModelSerializer):
+    last_request = serializers.DateTimeField()
+
+    class Meta:
+        model = UserActivity
+        fields = ('user',
+                  'last_login',
+                  'last_request'
+                  )
