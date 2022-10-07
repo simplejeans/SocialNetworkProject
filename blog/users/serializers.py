@@ -36,11 +36,11 @@ class UserSignUpSerializer(serializers.ModelSerializer):
 
 
 class UserActivitySerializer(serializers.ModelSerializer):
-    last_request = serializers.DateTimeField(source='extendeduser.last_request')
+    last_request = serializers.DateTimeField()
 
     class Meta:
         model = UserActivity
-        fields = ('username',
+        fields = ('user',
                   'last_login',
                   'last_request'
                   )
