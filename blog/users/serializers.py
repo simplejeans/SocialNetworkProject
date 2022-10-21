@@ -41,6 +41,6 @@ class UserActivitySerializer(serializers.ModelSerializer):
     class Meta:
         model = UserActivity
         fields = ('user',
-                  'last_login',
-                  'last_request'
+                  'last_request',
+                  'last_login'
                   )
