@@ -41,7 +41,7 @@ class PostApiTestCase(APITestCase):
 
 
 @freeze_time("2022-10-16")
-class PostAnalyticsApiTestCase(APITestCase):
+class LikesAnalyticsApiTestCase(APITestCase):
 
     def setUp(self):
         self.user = User.objects.create(username="alabama", password="password")
@@ -53,12 +53,9 @@ class PostAnalyticsApiTestCase(APITestCase):
         self.like2 = Like.objects.create(post=self.post2, user=self.user, created_at=datetime.now)
 
     def test_likes_analytics(self):
-
         url = "http://127.0.0.1:8000/api/posts/likes/analytics/?date_from=2022-10-15&date_to=2022-10-18/"
         expected_data = [{"date": "2022-10-16", "likes": 2}]
-
         response = self.client.get(url)
-
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json(), expected_data)
 
@@ -72,14 +69,11 @@ class UserActivityTestCase(APITestCase):
         self.user.save()
 
     def test_user_activity(self):
-
         self.client.force_login(self.user)
-
-        response = self.client.get(reverse("users:user_activity", kwargs={"user_id": self.user.id}))
-
+        url = reverse("users:user_activity", kwargs={"user_id": self.user.id})
+        response = self.client.get(url)
         self.assertEqual(status.HTTP_200_OK, response.status_code, response.json())
         response_data = response.json()
-        print(response.data)
         self.assertEqual(response_data["user"], self.user.id)
         self.assertEqual(response_data["last_login"], '2022-10-16T00:00:00Z')
         self.assertEqual(response_data["last_request"], '2022-10-16T00:00:00Z')

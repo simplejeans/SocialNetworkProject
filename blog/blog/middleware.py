@@ -11,5 +11,5 @@ class UserActivityMiddleware:
     def __call__(self, request):
         user = request.user
         if user.is_authenticated:
-            user_activity = UserActivity.objects.update_or_create(user=request.user, defaults={"last_request": timezone.now()})
+            UserActivity.objects.update_or_create(user=request.user, defaults={"last_request": timezone.now()})
         return self.get_response(request)
