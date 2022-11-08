@@ -6,6 +6,9 @@ class SocialNetworkAPIClient:
     create_post_url = "http://127.0.0.1:8000/api/posts/"
     sign_in_url = "http://127.0.0.1:8000/api/users/token/"
 
+    def get_like_url(self, pk: int) -> str:
+        return f"http://127.0.0.1:8000/api/posts/{pk}/like/"
+
     @staticmethod
     def client(method: str, url: str, headers: dict, json: dict) -> Response:
         return request(method=method, url=url, headers=headers, json=json)
@@ -26,9 +29,6 @@ class SocialNetworkAPIClient:
         response = self.client(method="post", url=self.create_post_url,
                                headers={"Authorization": f"Bearer {access_token}"}, json=data)
         return response.json()
-
-    def get_like_url(self, pk: int) -> str:
-        return f"http://127.0.0.1:8000/api/posts/{pk}/like/"
 
     def like_post(self, username: str, password: str, pk: int):
         access_token = self.sign_in(username=username, password=password)
