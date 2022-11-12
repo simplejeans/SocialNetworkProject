@@ -26,9 +26,8 @@ class SocialNetworkAPIClient:
     def create_post(self, username: str, password: str, post_payload: dict):
         access_token = self.sign_in(username=username, password=password)
         data = post_payload
-        response = self.client(method="post", url=self.create_post_url,
-                               headers={"Authorization": f"Bearer {access_token}"}, json=data)
-        return response.json()
+        self.client(method="post", url=self.create_post_url,
+                    headers={"Authorization": f"Bearer {access_token}"}, json=data)
 
     def like_post(self, username: str, password: str, pk: int):
         access_token = self.sign_in(username=username, password=password)
